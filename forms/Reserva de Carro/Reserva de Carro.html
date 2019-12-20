@@ -1,0 +1,175 @@
+<html>
+
+<head>
+	<link type="text/css" rel="stylesheet" href="/style-guide/css/fluig-style-guide.min.css" />
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/jquery/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/portal/resources/js/mustache/mustache-min.js"></script>
+	<script type="text/javascript" src="/style-guide/js/fluig-style-guide.min.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/webdesk/vcXMLRPC.js"></script>
+	<script type="text/javascript" src="reserva.js"></script>
+	<script type="text/javascript" src="produto_cod.js"></script>
+	
+
+</head>
+
+<body>
+	<div class="fluig-style-guide">
+		<form name="form" role="form">
+
+			<div class="panel panel-primary">
+				<div class="panel-heading">
+					<h3 class="panel-title" align="center"><strong>Solicitação Reserva de Carro</strong></h3>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" id="pn_DadosSolicitacao" name="pn_DadosSolicitacao">
+				<div class="panel-heading">Informacoes da socilitacao</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-3" id="zoom-div">
+							<label class="control-label">Nome do Beneficiado: <FONT COLOR="red">*</FONT> </label>
+							<input type="zoom" id="Funcionario" name="Funcionario" data-zoom="{
+													'displayKey':'RA_NOME',
+													'datasetId':'ds_funcionarios',
+													'fields':[
+													{
+													'field':'RA_NOME',
+													'label':'Nome'
+													}
+															]
+														}" />
+							</select>
+						</div>
+
+						<div class="col-md-3">
+							<label for="txtNome">Desc: <FONT COLOR="red">*</FONT></label>
+							<input id="inputDesc" placeholder="" name="inputDesc"
+								class="form-control change-qtde change-valor" type="text" />
+						</div>
+
+						<div class="col-md-3">
+							<label for="txtNome">Empresa do Beneficiado: <FONT COLOR="red">*</FONT></label>
+							<input id="inputEmpr" placeholder="" name="inputEmpr"
+								class="form-control change-qtde change-valor" type="text" />
+						</div>
+
+						<div class="col-md-3">
+							<label class="control-label">Centro de custo destino: <FONT COLOR="red">*</FONT> </label>
+							<input placeholder="Pesquise o C.Custo" type="zoom" id="ctt_custo" name="ctt_custo"
+								data-zoom="{
+								'displayKey':'CTT_CUSTO',
+								'datasetId':'dsCentroDeCusto',
+								'fields':[
+								{
+								   'field':'CTT_CUSTO',
+								   'label':'Codigo'
+							   },{
+							   'field':'CTT_DESC01',
+							   'label':'Descricao',
+							   'standard':'true',
+							   'search':'true'
+						  		 }
+						   			]
+					  				 }" />
+							</select>
+						</div>
+
+						<div class="col-md-3" id="1" id="emailgestordiv">
+							<label class="control-label" for="ramal">E-mail Gestor</label>
+							<input name="email_gestor" id="email_gestor" class="form-control" readonly="false">
+
+						</div>
+
+						<div class="col-md-3" id="codgestordiv" name="codgestordiv">
+							<label for="ramal">Cod Gestor</label>
+							<input name="cod_gestor" id="cod_gestor" class="form-control" readonly="true">
+						</div>
+
+
+
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" id="pn_DadosSolicitacao" name="pn_DadosSolicitacao">
+				<div class="panel-heading">Informacoes da socilitacao</div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-md-4">
+							<label for="ImputDescrico">Recursos: <FONT COLOR="red">*</FONT></label>
+							<select class="form-control" name="carro" id="carro" dataset="ds_RecursosCarros"
+								datasetkey="Recursos" datasetvalue="Recursos" onchange="ValidaDataset()"></select>
+						</div>
+						<div class="col-md-4">
+							<label for="ImputDatarecurso">Data <FONT COLOR="red">*</FONT></label>
+							<input type="datetime-local" name="dateRecursode" id="dateRecursode" class="form-control"
+								placeholder="">
+						</div>
+						<div class="col-md-4">
+							<label for="ImputDatarecurso">até <FONT COLOR="red">*</FONT></label>
+							<input type="datetime-local" name="dateRecursoate" id="dateRecursoate"
+								onchange="ValidaDataset()" class="form-control" placeholder="">
+						</div>
+
+						<!--<div class="col-md-2">
+							<label for="ImputDescrico">Hora de</label>
+							<select class="form-control" name="hora" id="hora" dataset="dsPesquisahorario"
+								datasetkey="horario" datasetvalue="horario" onchange="ValidaDataset()"></select>
+						</div>
+						<div class="col-md-2">
+							<label for="ImputDescrico">Hora até</label>
+							<select class="form-control" name="horaate" id="horaate" dataset="dsPesquisahorario"
+								datasetkey="horario" datasetvalue="horario" onchange="ValidaDataset()"></select>
+						</div>-->
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" id="pn_Justificativa" name="pn_Justificativa">
+				<div class="panel-heading">Justificativa Solicitante </div>
+				<div class="panel-body">
+					<div class="row">
+						<div class="form-group col-md-12">
+							<textarea id="cp_JustificativaDoSolicitante" rows="2" name="cp_JustificativaDoSolicitante"
+								class="form-control" wrap="hard"
+								placeholder="Detalhe a justificativa do pedido. "></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="panel panel-primary" id="pn_Gestor" name="pn_Gestor">
+				<div class="panel-heading">Gestor</div>
+				<div class="panel-body">
+					
+						<div class="col-md-2">
+							<label for="txtNome">Aprovada Solicitação: <FONT COLOR="red">*</FONT></label>
+							<div class="input-grup">
+								<select name="AprovaSolicitacao" id="AprovaSolicitacao" !--onchange="ValidaDataset()"--! class="form-control">
+								<option value="">Selecione...</option>
+									<option value="SolicitacaoReprovada">Não</option>
+									<option value="SolicitacaoAprovada">Sim</option>
+									<option value="SolicitacaoReavaliar">Reavaliar Data/Hora</option>
+									
+								</select>
+							</div>
+						</div>
+				
+						<div class="row"></div>
+						<div class="row"></div>
+
+					
+						<div class="form-group col-md-12">
+							<textarea id="cp_JustificativaDoGestor" rows="2" name="cp_JustificativaDoGestor"
+								class="form-control" wrap="hard"
+								placeholder="Detalhe a justificativa"></textarea>
+						</div>
+					</div>
+				
+
+		</form>
+	</div>
+</body>
+
+</html>
